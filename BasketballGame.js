@@ -22,18 +22,18 @@ while(startGame){
 				checkResult = true;
 				homeTeam = false;
 			}
-			else if(num > .11 && num < .65){
+			else if(num > .11 && num < .55){
 				console.log("home team passed the ball..")
 				num = Math.random();
 					if(checkPasses){
 						num = Math.random();
-						if(num < .15){
+						if(num < .13){
 							result = "turnover";
 							homeTeam = false;
 							checkResult = true;
 							checkPasses = false;
 						}
-						else if(num > .16 && num < .70){
+						else if(num > .14 && num < .63){
 							console.log("pass was completed");
 							passesCompleted++;
 								if(passesCompleted == 4){
@@ -49,7 +49,7 @@ while(startGame){
 					else{
 						if(passesTotal == 1){
 							num = Math.random();
-								if(num < .68){
+								if(num < .70){
 									result = "2pt field goal";
 									checkResult = true;
 									homeTeam = false;
@@ -72,7 +72,7 @@ while(startGame){
 						}
 						else if(passesTotal == 2 || passesTotal == 3){
 							num = Math.random();
-							if(num < .45){
+							if(num < .50){
 								result = "2pt field goal";
 								checkResult = true;
 								homeTeam = false;
@@ -93,7 +93,7 @@ while(startGame){
 						}
 						else if(passesTotal == 4){
 							num = Math.random();
-							if(num < .39){
+							if(num < .42){
 								result = "3pt field goal";
 								checkResult = true;
 								homeTeam = false;
@@ -115,7 +115,7 @@ while(startGame){
 
 					}
 			}
-			else if(num > .66){
+			else if(num > .70){
 				console.log("home team shoots..")
 				num = Math.random();
 				if(num > .65){
@@ -185,6 +185,7 @@ while(startGame){
 					console.log("Home team scored three points!")
 					homeTeamScore++;
 					homeTeamScore++;
+					homeTeamScore++;
 					awayTeam = true;
 					checkResult = false;
 					break;
@@ -203,12 +204,12 @@ while(startGame){
 	while(awayTeam){
 
 		num = Math.random();
-			if(num < .10){
+			if(num < .15){
 				result = "turnover"
-				checkResult = true;
 				awayTeam  = false;
+				checkResult = true;2
 			}
-			else if(num > .11 && num < .65){
+			else if(num > .16 && num < .65){
 				console.log("away team passed the ball..")
 				num = Math.random();
 					if(checkPasses){
@@ -235,7 +236,7 @@ while(startGame){
 					else{
 						if(passesTotal == 1){
 							num = Math.random();
-								if(num < .68){
+								if(num < .60){
 									result = "2pt field goal";
 									checkResult = true;
 									awayTeam  = false;
@@ -256,7 +257,7 @@ while(startGame){
 						}
 						else if(passesTotal == 2 || passesTotal == 3){
 							num = Math.random();
-							if(num < .45){
+							if(num < .41){
 								result = "2pt field goal";
 								checkResult = true;
 								awayTeam  = false;
@@ -277,7 +278,7 @@ while(startGame){
 						}
 						else if(passesTotal == 4){
 							num = Math.random();
-							if(num < .39){
+							if(num < .32){
 								result = "3pt field goal";
 								checkResult = true;
 								awayTeam  = false;
@@ -304,7 +305,7 @@ while(startGame){
 				num = Math.random();
 				if(num > .65){
 					num = Math.random();
-					if(num < .45){
+					if(num < .42){
 						result = "2pt field goal";
 						checkResult = true;
 						awayTeam  = false;
@@ -325,7 +326,7 @@ while(startGame){
 				}
 				else{
 					num = Math.random();
-					if(num < .35){
+					if(num < .31){
 						result = "3pt field goal";
 						checkResult = true;
 						awayTeam = false;
@@ -385,9 +386,10 @@ while(startGame){
 			}	
 	}	}
 
+
 	count++;
 
-	if(count == 100){
+	if(count == 85){
 		startGame = false;
 		console.log("Home Team: " + homeTeamScore + " Away Team: " + awayTeamScore)
 	}
