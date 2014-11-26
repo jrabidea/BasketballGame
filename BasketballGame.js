@@ -22,6 +22,7 @@ var result;
 var possession;
 var currentPossession;
 
+// creates a team and generates an overall
 function Team(name, overall){
 	this.name = name;
 	var generateNum = true;
@@ -47,11 +48,13 @@ function Team(name, overall){
 
 }
 
+// Set the name of the teams playing
 function TeamName(name1, name2){
 	this.name1 = name1;
 	this.name2 = name2;
 }
 
+// Gets the result and prints it. Points are added here. 
 function getResult(result){
 
 			this.result = result;
@@ -361,14 +364,16 @@ function shootingPercentage(overallOne, overallTwo){
 
 }
 
+// Teams
 teams[0] = new Team('Minnesota', 0);
 teams[1] = new Team('Iowa', 0);
 teams[2] = new Team('Michigan', 0);
 teams[3] = new Team('Wisconsin', 0);
 
-
+// Inital possession
 team = teams[0].name;
 
+// Game starts
 function gameStart(team1, team2){
 
 	this.team1 = team1;
@@ -376,6 +381,8 @@ function gameStart(team1, team2){
 
 	shootingPercentage(team1.overall, team2.overall);
 	TeamName(team1.name, team2.name);
+
+	// Check to see who has possession
 	function currentPossession(team){
 		this.team = team;
 
@@ -389,144 +396,60 @@ function gameStart(team1, team2){
 		}
 	}
 
-
+	// Generate a result from the possession
 	function generateResult(possession){
 
 		this.possession = possession;
-
+		// Home Team's possession
 		if(possession == team1.name){
-			// Home Team
+			
 			num = Math.random();
-				if(num < .10){
-					result = "home turnover";
+			if(num < .25){
+				result = "home turnover";
+				team = team2.name;
+			}
+			else if(num > .25 && num < .65){
+			console.log(team1.name + " shoots..")
+			num = Math.random();
+				if(num < homeTeamTwoPointPercentage){
+					result = "home 2pt field goal";
 					team = team2.name;
-					}
-				else if(num > .11 && num < .55){
-					console.log(team1.name + " passed the ball..")
-					num = Math.random();
-						if(checkPasses){
-							num = Math.random();
-							if(num < .13){
-								result = "home turnover";
-								team = team2.name;
-							}
-							else if(num > .14 && num < .63){
-								console.log("pass was completed")
-								passesCompleted++;
-									if(passesCompleted == 4){
-										passesTotal = passesCompleted;
-										checkPasses = false;
-									}
-							}
-							else{
-								passesTotal = passesCompleted;
-								checkPasses = false;
-							}
-						}
-						else{
-							if(passesTotal == 1){
-								num = Math.random();
-								console.log(team1.name + " shoots...")
-									if(num < homeTeamTwoPointPercentage){
-										result = "home 2pt field goal";
-										team = team2.name;
-									}
-									else{
-										num = Math.random();
-											if(num < .50){
-												result = "home offensive rebound";
-												team = team1.name;
-											}
-											else{
-												result = "away defensive rebound";
-												team = team2.name;
-											}
-									}
-							}
-							else if(passesTotal == 2 || passesTotal == 3){
-								num = Math.random();
-								console.log(team1.name + " shoots...")
-								if(num < homeTeamTwoPointPercentage){
-									result = "home 2pt field goal";
-									team = team2.name;
-								}
-								else{
-									num = Math.random();
-									if(num < .50){
-										result = "home offensive rebound";
-										team = team1.name;
-									}
-									else{
-										result = "away defensive rebound";
-										team = team2.name;
-									}
-								}
-							}
-							else if(passesTotal == 4){
-								num = Math.random();
-								console.log(team1.name + " shoots...")
-								if(num < homeTeamThreePointPercentage){
-									result = "home 3pt field goal";
-									team = team2.name;
-								}
-								else{
-									num = Math.random();
-									if(num < .50){
-										result = "home offensive rebound";
-										team = team1.name;
-									}
-									else{
-										result = "away defensive rebound";
-										team = team2.name;
-									}
-								}
-							}
-
-						}
 				}
-				else if(num > .56){
-					console.log(team1.name + " shoots...")
+				else{
 					num = Math.random();
-					if(num > .65){
-						num = Math.random();
-						if(num < homeTeamTwoPointPercentage){
-							result = "home 2pt field goal";
-							team = team2.name;
-						}
-						else{
-							num = Math.random();
-							if(num < .50){
-								result = "home offensive rebound";
-								team = team1.name;
-							}
-							else{
-								result = "away defensive rebound";
-								team = team2.name;
-							}
-						}
+					if(num < .50){
+						result = "home offensive rebound";
+						team = team1.name;
+					}
+					else{
+						result = "away defensive rebound";
+						team = team2.name;
+					}
+				}
+			}
+				
+				else if(num > .65 && num < .99){
+					num = Math.random();
+					console.log(team1.name + " shoots...")
+					if(num < homeTeamThreePointPercentage){
+						result = "home 3pt field goal";
+						team = team2.name;
 					}
 					else{
 						num = Math.random();
-						console.log(team1.name + " shoots...")
-						if(num < homeTeamThreePointPercentage){
-							result = "home 3pt field goal";
-							team = team2.name;
+						if(num < .50){
+							result = "home offensive rebound";
+							team = team1.name;
 						}
 						else{
-							num = Math.random();
-							if(num < .50){
-								result = "home offensive rebound";
-								team = team1.name;
-							}
-							else{
-								result = "away defensive rebound";
-								team = team2.name;;
-							}
+							result = "away defensive rebound";
+							team = team2.name;;
 						}
 					}
 				}
 		}
-
+		
+		// Away Team's possession
 		if(possession == team2.name){
 			// Away Team
 			num = Math.random();
@@ -534,135 +457,52 @@ function gameStart(team1, team2){
 				result = "away turnover";
 				team = team1.name;
 			}
-			else if(num > .16 && num < .65){
-				console.log(team2.name + " passed the ball..")
-				num = Math.random();
-					if(checkPasses){
-						num = Math.random();
-						if(num < .15){
-							result = "away turnover";
-							team = team1.name;
-						}
-						else if(num > .16 && num < .70){
-							console.log("pass was completed");
-							passesCompleted++;
-								if(passesCompleted == 4){
-									passesTotal = passesCompleted;
-									checkPasses = false;
-								}
-						}
-						else{
-							passesTotal = passesCompleted;
-							checkPasses = false;
-						}
-					}
-					else{
-						if(passesTotal == 1){
-							console.log(team2.name + " shoots...")
-							num = Math.random();
-								if(num < awayTeamTwoPointPercentage){
-									result = "away 2pt field goal";
-									team = team1.name;
-								}
-								else{
-									num = Math.random();
-										if(num < .50){
-											result = "away offensive rebound";
-											team = team2.name;
-										}
-										else{
-											result = "home defensive rebound";
-											team = team1.name;
-										}
-								}
-						}
-						else if(passesTotal == 2 || passesTotal == 3){
-							num = Math.random();
-							console.log(team2.name + " shoots...")
-							if(num < awayTeamTwoPointPercentage){
-								result = "away 2pt field goal";
-								team = team1.name;
-							}
-							else{
-								num = Math.random();
-								if(num < .50){
-									result = "away offensive rebound";
-									team = team2.name;
-								}
-								else{
-									result = "home defensive rebound";
-									team = team1.name;
-								}
-							}
-						}
-						else if(passesTotal == 4){
-							num = Math.random();
-							console.log(team2.name + " shoots...")
-							if(num < awayTeamThreePointPercentage){
-								result = "away 3pt field goal";
-								team = team1.name;
-							}
-							else{
-								num = Math.random();
-								if(num < .50){
-									result = "away offensive rebound";
-									team = team2.name;
-								}
-								else{
-									result = "home defensive rebound";
-									team = team1.name;
-								}
-							}
-						}
-
-					}
-			}
-			else if(num > .66){
-				console.log(team2.name + " shoots...")
-				num = Math.random();
-				if(num > .65){
-					num = Math.random();
-					if(num < awayTeamTwoPointPercentage){
-						result = "away 2pt field goal";
-						team = team1.name;
-					}
-					else{
-						num = Math.random();
-						if(num < .50){
-							result = "away offensive rebound";
-							team = team2.name;
-						}
-						else{
-							result = "home defensive rebound";
-							team = team1.name;
-						}
-					}
+			
+			else if(num > .25 && num < .65){
+			console.log(team2.name + " shoots...")
+			num = Math.random();
+				if(num < awayTeamTwoPointPercentage){
+					result = "away 2pt field goal";
+					team = team1.name;
 				}
 				else{
 					num = Math.random();
-					console.log(team2.name + " shoots...")
-					if(num < awayTeamThreePointPercentage){
-						result = "away 3pt field goal";
-						team = team1.name;
+					if(num < .50){
+						result = "away offensive rebound";
+						team = team2.name;
 					}
 					else{
-						num = Math.random();
-						if(num < .50){
-							result = "away offensive rebound";
-							team = team2.name;
+						result = "home defensive rebound";
+						team = team1.name;
+					}
+				}
+			}
+				
+			else if(num > .65 && num < .99){
+				num = Math.random();
+				console.log(team2.name + " shoots...")
+				if(num < awayTeamThreePointPercentage){
+					result = "away 3pt field goal";
+					team = team1.name;
+				}
+				else{
+					num = Math.random();
+					if(num < .50){
+						result = "away offensive rebound";
+						team = team2.name;
+					
+					}
+					else{
+						result = "home defensive rebound";
+						team = team1.name;
 						
-						}
-						else{
-							result = "home defensive rebound";
-							team = team1.name;
-							
-						}
 					}
 				}
 			}
 		}
 	}
 
+	//function calls
 	currentPossession(team);
 	generateResult(currentPossession);
 	getResult(result);	
