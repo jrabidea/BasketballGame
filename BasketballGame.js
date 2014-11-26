@@ -36,7 +36,7 @@ function Team(name, overall){
 		num = randNum * 100;
 		finalNum = Math.round(num);
 
-		if(finalNum > 76){
+		if(finalNum > 76 && finalNum < 97){
 			overall = finalNum;
 			this.overall = overall;
 			generateNum = false;
@@ -364,7 +364,7 @@ function shootingPercentage(overallOne, overallTwo){
 
 }
 
-// Teams
+//Teams
 teams[0] = new Team('Minnesota', 0);
 teams[1] = new Team('Iowa', 0);
 teams[2] = new Team('Michigan', 0);
