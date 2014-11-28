@@ -132,7 +132,7 @@ function getResult(result){
 					console.log(finalResult);
 					homeTeam = true;
 					break;
-				case "away 3pt field goal missed. away offensive rebound":
+				case "away 3pt field goal missed. Away offensive rebound":
 					finalResult = name2 + " rebounded the ball.";
 					missedShot3ptAway++;
 					awayOffRebound++;
@@ -574,13 +574,13 @@ function gameStart(team1, team2){
 
 		clearInterval(delay);
 		console.log("The final score is... \n" + name1 + ":" + homeTeamScore + " " + name2+ ":" + awayTeamScore)
-		console.log("Home-Stats:\n" + "2pt field goals: " + missedShot2ptHome + "/" + homeTotal2PointShots + " - " + Math.round(home2PointPercentage) + "%")
-		console.log("3pt field goals: " + missedShot3ptHome + "/" + homeTotal3PointShots + " - " + Math.round(home3PointPercentage) + "%")
+		console.log("Home-Stats:\n" + "2pt field goals: " + madeHome2ptShot + "/" + homeTotal2PointShots + " - " + Math.round(home2PointPercentage) + "%")
+		console.log("3pt field goals: " + madeHome3ptShot + "/" + homeTotal3PointShots + " - " + Math.round(home3PointPercentage) + "%")
 		console.log("Total Rebounds: " + homeTotalRebounds)
 		console.log("Offensive Rebounds: " + homeOffRebound + "\n" + "Defensive Rebounds: " + homeDefRebound)
 		console.log("Turnovers: " + homeTurnover)
-		console.log("Away-Stats:\n" + "2pt field goals: " + missedShot2ptAway + "/" + awayTotal2PointShots + " - " + Math.round(away2PointPercentage) + "%")
-		console.log("3pt field goals: " + missedShot3ptAway + "/" + awayTotal3PointShots + " - " + Math.round(away3PointPercentage) + "%")
+		console.log("Away-Stats:\n" + "2pt field goals: " + madeAway2ptShot + "/" + awayTotal2PointShots + " - " + Math.round(away2PointPercentage) + "%")
+		console.log("3pt field goals: " + madeAway3ptShot + "/" + awayTotal3PointShots + " - " + Math.round(away3PointPercentage) + "%")
 		console.log("Total Rebounds: " + awayTotalRebounds)
 		console.log("Offensive Rebounds: " + awayOffRebound + "\n" + "Defensive Rebounds: " + awayDefRebound)
 		console.log("Turnovers: " + awayTurnover)
