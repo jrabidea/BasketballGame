@@ -565,10 +565,10 @@ function gameStart(team1, team2){
 		var homeTotal3PointShots = missedShot3ptHome + madeHome3ptShot;
 		var awayTotal2PointShots = missedShot2ptAway + madeAway2ptShot;
 		var awayTotal3PointShots = missedShot3ptAway + madeAway3ptShot;
-		var home2PointPercentage = missedShot2ptHome/homeTotal2PointShots * 100;
-		var home3PointPercentage = missedShot3ptHome/homeTotal3PointShots * 100;
-		var away2PointPercentage = missedShot2ptAway/awayTotal2PointShots * 100;
-		var away3PointPercentage = missedShot3ptAway/awayTotal3PointShots * 100;
+		var home2PointPercentage = madeAway2ptShot/homeTotal2PointShots * 100;
+		var home3PointPercentage = madeAway3ptShot/homeTotal3PointShots * 100;
+		var away2PointPercentage = madeAway2ptShot/awayTotal2PointShots * 100;
+		var away3PointPercentage = madeAway3ptShot/awayTotal3PointShots * 100;
 		var homeTotalRebounds = homeOffRebound + homeDefRebound;
 		var awayTotalRebounds = awayOffRebound + awayDefRebound;
 
