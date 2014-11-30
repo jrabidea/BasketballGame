@@ -35,29 +35,54 @@ var homeTurnover = 0;
 var awayTurnover = 0;
 
 // creates a team and generates an overall
-function Team(name, overall){
+function Team(name, overall, offOverall, defOverall){
 	this.name = name;
-	var generateNum = true;
+	var generateOverallNum = true;
+	var generateOffNum = true;
+	var generateDefNum = true;
+	var combinedOverall;
 	var randNum;
 	var num;
 	var finalNum;
 
-	while(generateNum){
+	while(generateOffNum){
 
 		randNum = Math.random();
 		num = randNum * 100;
 		finalNum = Math.round(num);
 
 		if(finalNum > 76 && finalNum < 95){
-			overall = finalNum;
-			this.overall = overall;
-			generateNum = false;
+			offOverall = finalNum;
+			this.offOverall = offOverall;
+			generateOffNum = false;
+			generateDefNum = true;
 		}
 		else{
-			generateNum = true;
+			generateOffNum= true;
 		}
 	}
 
+	while(generateDefNum){
+
+		randNum = Math.random();
+		num = randNum * 100;
+		finalNum = Math.round(num);
+
+		if(finalNum > 76 && finalNum < 95){
+			defOverall = finalNum;
+			this.defOverall = defOverall;
+			generateOffNum = false;
+			generateDefNum = false;
+		}
+		else{
+			generateDefNum= true;
+		}
+	}
+
+	combinedOverall = defOverall + offOverall;
+	var rawOverall = combinedOverall/2;
+	overall = Math.round(rawOverall);
+	this.overall = overall;
 }
 
 // Set the name of the teams playing
@@ -606,11 +631,12 @@ function checkComeback(score1, score2){
 }
 
 //Teams
-teams[0] = new Team('Minnesota', 0);
-teams[1] = new Team('Iowa', 0);
-teams[2] = new Team('Michigan', 0);
-teams[3] = new Team('Wisconsin', 0);
+teams[0] = new Team('Minnesota', 0, 0, 0);
+teams[1] = new Team('Iowa', 0, 0, 0);
+teams[2] = new Team('Michigan', 0, 0, 0);
+teams[3] = new Team('Wisconsin', 0, 0, 0);
 
+/*
 // Inital possession
 team = teams[3].name;
 
@@ -723,6 +749,7 @@ function gameStart(team1, team2){
 				num = Math.random();
 				console.log(team2.name + " shoots...")
 				if(num <= awayTeamThreePointPercentage){
+					console.log(awayTeamThreePointPercentage)
 					result = "away 3pt field goal";
 					team = team1.name;
 				}
@@ -778,5 +805,9 @@ function gameStart(team1, team2){
 	}
 }
 
-delay = setInterval(function(){gameStart(teams[3], teams[1])}, 1000);
+delay = setInterval(function(){gameStart(teams[3], teams[1])}, 5000);
+
 console.log(teams[3].overall + ", " + teams[1].overall)
+*/
+
+console.log(teams[0].name + " Offense: " + teams[0].offOverall + " Defense: " + teams[0].defOverall + " Total Overall: " + teams[0].overall);
