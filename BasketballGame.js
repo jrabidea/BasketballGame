@@ -105,28 +105,29 @@ function getResult(result){
 
 			switch(result){
 				case "home 2pt field goal missed. Home offensive rebound":
-					finalResult = name1 + " rebounded the ball.";
+					finalResult = name1 + " missed the shot. " + name1 + " rebound.";
 					missedShot2ptHome++;
 					homeOffRebound++;
 					console.log(finalResult);
 					break;
 				case "home 2pt field goal missed. Away defensive rebound":
-					finalResult = name1 + " missed the shot." + name2 + " rebounded the ball.";
+					finalResult = name1 + " missed the shot. " + name2 + " rebound.";
 					missedShot2ptHome++;
 					awayDefRebound++;
 					console.log(finalResult);
 					break;
 				case "home 3pt field goal missed. Home offensive rebound":
-					finalResult = name1 + " missed the shot." + name2 + " rebounded the ball";
+					finalResult = name1 + " missed the shot. " + name2 + " rebound.";
 					missedShot3ptHome++;
 					homeOffRebound++;
 					console.log(finalResult);
 					break;
 				case "home 3pt field goal missed. Away defensive rebound":
-					finalResult = name1 + " missed the shot." + name2 + " rebound the ball.";
+					finalResult = name1 + " missed the shot." + name2 + " rebound.";
 					missedShot3ptHome++;
-					homeDefRebound++;
+					awayDefRebound++;
 					console.log(finalResult);
+					break;
 				case "home 2pt field goal":
 					finalResult = name1 + " scored two points!";
 					console.log(finalResult);
@@ -140,31 +141,31 @@ function getResult(result){
 					homeTeamScore = homeTeamScore + 3;
 					break;
 				case "home turnover":
-					finalResult = name1 + " turnovered the ball. Possesssion has changed";
+					finalResult = name1 + " turnover.";
 					console.log(finalResult);
 					homeTurnover++;
 					break;
 				case "away 2pt field goal missed. Home defensive rebound":
-					finalResult = name1 + " rebounded the ball.";
+					finalResult = name2 + " missed the shot. " +  name1 + " rebound.";
 					missedShot2ptAway++;
 					homeDefRebound++;
 					console.log(finalResult);
 					break;
 				case "away 2pt field goal missed. Away offensive rebound":
-					finalResult = name2 + " rebounded the ball.";
+					finalResult = name2 + " rebound.";
 					missedShot2ptAway++;
 					awayOffRebound;
 					console.log(finalResult);
 					break;	
 				case "away 3pt field goal missed. Home defensive rebound":
-					finalResult = name2 + " missed the shot." + name1 + " rebounded the ball.";
+					finalResult = name2 + " missed the shot." + name1 + " rebound.";
 					missedShot3ptAway++;
 					homeDefRebound++;
 					console.log(finalResult);
 					homeTeam = true;
 					break;
 				case "away 3pt field goal missed. Away offensive rebound":
-					finalResult = name2 + " rebounded the ball.";
+					finalResult = name2 + " rebound.";
 					missedShot3ptAway++;
 					awayOffRebound++;
 					console.log(finalResult);
@@ -182,7 +183,7 @@ function getResult(result){
 					console.log(finalResult)
 					break;
 				case "away turnover":
-					finalResult = name2 + " turnovered the ball. Possesssion has changed";
+					finalResult = name2 + " turnover.";
 					awayTurnover++;
 					console.log(finalResult)
 					break;
@@ -1117,7 +1118,7 @@ function gameStart(team1, team2){
 				team = team2.name;
 			}
 			else if(num > homeTurnover && num < homeThreePointShot){
-				console.log(team1.name + " shoots..")
+				console.log(team1.name + " shoots a 2 pointer...")
 				num = Math.random();
 				if(num <= homeTeamTwoPointPercentage){
 					result = "home 2pt field goal";
@@ -1136,9 +1137,9 @@ function gameStart(team1, team2){
 				}
 			}
 				
-			else{
+			else if(num > homeThreePointShot){
 				num = Math.random();
-				console.log(team1.name + " shoots...")
+				console.log(team1.name + " shoots a 3 pointer...")
 				if(num <= homeTeamThreePointPercentage){
 					result = "home 3pt field goal";
 					team = team2.name;
@@ -1149,9 +1150,9 @@ function gameStart(team1, team2){
 						result = "home 3pt field goal missed. Home offensive rebound";
 						team = team1.name;
 					}
-					else{
+					else {
 						result = "home 3pt field goal missed. Away defensive rebound";
-						team = team2.name;;
+						team = team2.name;
 					}
 				}
 			}
@@ -1167,7 +1168,7 @@ function gameStart(team1, team2){
 			}
 			
 			else if(num > awayTurnover && num < awayThreePointShot){
-				console.log(team2.name + " shoots...")
+				console.log(team2.name + " shoots a 2 pointer...")
 				num = Math.random();
 				if(num <= awayTeamTwoPointPercentage){
 					result = "away 2pt field goal";
@@ -1186,9 +1187,9 @@ function gameStart(team1, team2){
 				}
 			}
 				
-			else{
+			else if(num > awayThreePointShot){
 				num = Math.random();
-				console.log(team2.name + " shoots...")
+				console.log(team2.name + " shoots a 3 pointer...")
 				if(num <= awayTeamThreePointPercentage){
 					result = "away 3pt field goal";
 					team = team1.name;
@@ -1208,6 +1209,7 @@ function gameStart(team1, team2){
 				}
 			}
 		}
+
 	}
 
 	//function calls
