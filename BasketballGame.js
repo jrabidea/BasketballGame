@@ -37,8 +37,8 @@ var homeOffRebound = 0;
 var homeDefRebound = 0;
 var awayOffRebound = 0;
 var awayDefRebound = 0;
-var homeTurnover = 0;
-var awayTurnover = 0;
+var homeTurnovers = 0;
+var awayTurnovers = 0;
 
 // creates a team and generates an overall
 function Team(name, offOverall, defOverall, overall){
@@ -143,7 +143,7 @@ function getResult(result){
 				case "home turnover":
 					finalResult = name1 + " turnover.";
 					console.log(finalResult);
-					homeTurnover++;
+					homeTurnovers++;
 					break;
 				case "away 2pt field goal missed. Home defensive rebound":
 					finalResult = name2 + " missed the shot. " +  name1 + " rebounded the ball.";
@@ -184,7 +184,7 @@ function getResult(result){
 					break;
 				case "away turnover":
 					finalResult = name2 + " turnover.";
-					awayTurnover++;
+					awayTurnovers++;
 					console.log(finalResult)
 					break;
 				default:
@@ -634,7 +634,6 @@ function checkComeback(score1, score2){
 		}
 	}
 }
-
 
 function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall){
 
@@ -1238,12 +1237,12 @@ function gameStart(team1, team2){
 		console.log("3pt field goals: " + madeHome3ptShot + "/" + homeTotal3PointShots + " - " + Math.round(home3PointPercentage) + "%")
 		console.log("Total Rebounds: " + homeTotalRebounds)
 		console.log("Offensive Rebounds: " + homeOffRebound + "\n" + "Defensive Rebounds: " + homeDefRebound)
-		console.log("Turnovers: " + homeTurnover)
+		console.log("Turnovers: " + homeTurnovers)
 		console.log("Away-Stats:\n" + "2pt field goals: " + madeAway2ptShot + "/" + awayTotal2PointShots + " - " + Math.round(away2PointPercentage) + "%")
 		console.log("3pt field goals: " + madeAway3ptShot + "/" + awayTotal3PointShots + " - " + Math.round(away3PointPercentage) + "%")
 		console.log("Total Rebounds: " + awayTotalRebounds)
 		console.log("Offensive Rebounds: " + awayOffRebound + "\n" + "Defensive Rebounds: " + awayDefRebound)
-		console.log("Turnovers: " + awayTurnover)
+		console.log("Turnovers: " + awayTurnovers)
 	}
 }
 
