@@ -105,28 +105,29 @@ function getResult(result){
 
 			switch(result){
 				case "home 2pt field goal missed. Home offensive rebound":
-					finalResult = name1 + " rebounded the ball.";
+					finalResult = name1 + " missed the shot. " + name1 + " rebound.";
 					missedShot2ptHome++;
 					homeOffRebound++;
 					console.log(finalResult);
 					break;
 				case "home 2pt field goal missed. Away defensive rebound":
-					finalResult = name1 + " missed the shot." + name2 + " rebounded the ball.";
+					finalResult = name1 + " missed the shot. " + name2 + " rebound.";
 					missedShot2ptHome++;
 					awayDefRebound++;
 					console.log(finalResult);
 					break;
 				case "home 3pt field goal missed. Home offensive rebound":
-					finalResult = name1 + " missed the shot." + name2 + " rebounded the ball";
+					finalResult = name1 + " missed the shot. " + name2 + " rebound.";
 					missedShot3ptHome++;
 					homeOffRebound++;
 					console.log(finalResult);
 					break;
 				case "home 3pt field goal missed. Away defensive rebound":
-					finalResult = name1 + " missed the shot." + name2 + " rebound the ball.";
+					finalResult = name1 + " missed the shot." + name2 + " rebound.";
 					missedShot3ptHome++;
-					homeDefRebound++;
+					awayDefRebound++;
 					console.log(finalResult);
+					break;
 				case "home 2pt field goal":
 					finalResult = name1 + " scored two points!";
 					console.log(finalResult);
@@ -140,31 +141,31 @@ function getResult(result){
 					homeTeamScore = homeTeamScore + 3;
 					break;
 				case "home turnover":
-					finalResult = name1 + " turnovered the ball. Possesssion has changed";
+					finalResult = name1 + " turnover.";
 					console.log(finalResult);
 					homeTurnover++;
 					break;
 				case "away 2pt field goal missed. Home defensive rebound":
-					finalResult = name1 + " rebounded the ball.";
+					finalResult = name2 + " missed the shot. " +  name1 + " rebound.";
 					missedShot2ptAway++;
 					homeDefRebound++;
 					console.log(finalResult);
 					break;
 				case "away 2pt field goal missed. Away offensive rebound":
-					finalResult = name2 + " rebounded the ball.";
+					finalResult = name2 + " rebound.";
 					missedShot2ptAway++;
 					awayOffRebound;
 					console.log(finalResult);
 					break;	
 				case "away 3pt field goal missed. Home defensive rebound":
-					finalResult = name2 + " missed the shot." + name1 + " rebounded the ball.";
+					finalResult = name2 + " missed the shot." + name1 + " rebound.";
 					missedShot3ptAway++;
 					homeDefRebound++;
 					console.log(finalResult);
 					homeTeam = true;
 					break;
 				case "away 3pt field goal missed. Away offensive rebound":
-					finalResult = name2 + " rebounded the ball.";
+					finalResult = name2 + " rebound.";
 					missedShot3ptAway++;
 					awayOffRebound++;
 					console.log(finalResult);
@@ -182,7 +183,7 @@ function getResult(result){
 					console.log(finalResult)
 					break;
 				case "away turnover":
-					finalResult = name2 + " turnovered the ball. Possesssion has changed";
+					finalResult = name2 + " turnover.";
 					awayTurnover++;
 					console.log(finalResult)
 					break;
@@ -644,6 +645,8 @@ function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall)
 
 	var homeOffDifference = homeOffOverall - awayDefOverall;
 	var awayOffDifference = awayOffOverall - homeDefOverall;
+	var homeDefDifference = homeDefOverall - awayOffOverall;
+	var awayDefDifference = awayDefOverall - homeOffOverall;
 
 	if(homeOffOverall > awayDefOverall){
 
@@ -749,6 +752,112 @@ function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall)
 		}		
 
 	}
+
+	if(homeDefOverall > awayOffOverall){
+
+		switch(homeDefDifference){
+
+			case 1:
+				homeTurnover = .15 + .01;
+				homeThreePointShot = .61;
+				homeRebound = .50 - .01;
+				break;
+			case 2:
+				 homeTurnover = .15 + .02;
+				 homeThreePointShot = .62;
+				 homeRebound = .50 - .02;
+				 break;
+			case 3: 
+				homeTurnover = .15 + .03;
+				homeThreePointShot = .63;
+				homeRebound = .50 - .03;
+				break;
+			case 4: 
+				homeTurnover = .15 + .04;
+				homeThreePointShot = .64;
+				homeRebound = .50 - .04;
+				break;
+			case 5:
+				homeTurnover = .15 + .05;
+				homeThreePointShot = .65;
+				homeRebound = .50 - .05;
+				break;
+			case 6: 
+				homeTurnover = .15 + .06;
+				homeThreePointShot = .66;
+				homeRebound = .50 - .06;
+				break;
+			case 7:
+				homeTurnover = .15 + .07;
+				homeThreePointShot = .67;
+				homeRebound = .50 - .07;
+				break;
+			case 8:
+				homeTurnover = .15 + .08;
+				homeThreePointShot = .68;	
+				homeRebound = .50 - .08;
+				break;
+			case 9:
+				homeTurnover = .15 + .09;
+				homeThreePointShot = .69;
+				homeRebound = .50 - .09;
+				break;	
+			case 10:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .10;
+				break;		
+			case 11:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .11;	
+				break;	
+			case 12:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .12;
+				break;
+			case 13:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .13;
+				break;
+			case 14:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .14;
+				break;
+			case 15:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .15;
+				break;
+			case 16:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .15;
+				break;
+			case 17:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .15;
+				break;
+			case 18:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .15;
+				break;
+			case 19:
+				homeTurnover = .15 + .10;
+				homeThreePointShot = .70;
+				homeRebound = .50 - .15;
+				break;
+			default:
+				break;
+		}		
+
+	}
+
 	if(awayOffOverall > homeDefOverall){
 
 		switch(awayOffDifference){
@@ -854,6 +963,111 @@ function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall)
 
 	}
 
+	if(awayDefOverall > homeOffOverall){
+
+		switch(awayDefDifference){
+
+			case 1:
+				awayTurnover = .15 + .01;
+				awayThreePointShot = .61;
+				awayRebound = .50 - .01;
+				break;
+			case 2:
+				 awayTurnover = .15 + .02;
+				 awayThreePointShot = .62;
+				 awayRebound = .50 - .02;
+				 break;
+			case 3: 
+				awayTurnover = .15 + .03;
+				awayThreePointShot = .63;
+				awayRebound = .50 - .03;
+				break;
+			case 4: 
+				awayTurnover = .15 + .04;
+				awayThreePointShot = .64;
+				awayRebound = .50 - .04;
+				break;
+			case 5:
+				awayTurnover = .15 + .05;
+				awayThreePointShot = .65;
+				awayRebound = .50 - .05;
+				break;
+			case 6: 
+				awayTurnover = .15 + .06;
+				awayThreePointShot = .66;
+				awayRebound = .50 - .06;
+				break;
+			case 7:
+				awayTurnover = .15 + .07;
+				awayThreePointShot = .67;
+				awayRebound = .50 - .07;
+				break;
+			case 8:
+				awayTurnover = .15 + .08;
+				awayThreePointShot = .68;	
+				awayRebound = .50 - .08;
+				break;
+			case 9:
+				awayTurnover = .15 + .09;
+				awayThreePointShot = .69;
+				awayRebound = .50 - .09;
+				break;	
+			case 10:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .10;
+				break;		
+			case 11:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .11;	
+				break;	
+			case 12:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .12;
+				break;
+			case 13:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .13;
+				break;
+			case 14:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .14;
+				break;
+			case 15:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .15;
+				break;
+			case 16:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .15;
+				break;
+			case 17:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .15;
+				break;
+			case 18:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .15;
+				break;
+			case 19:
+				awayTurnover = .15 + .10;
+				awayThreePointShot = .70;
+				awayRebound = .50 - .15;
+				break;
+			default:
+				break;
+		}		
+
+	}
+
 }
 
 
@@ -904,7 +1118,7 @@ function gameStart(team1, team2){
 				team = team2.name;
 			}
 			else if(num > homeTurnover && num < homeThreePointShot){
-				console.log(team1.name + " shoots..")
+				console.log(team1.name + " shoots a 2 pointer...")
 				num = Math.random();
 				if(num <= homeTeamTwoPointPercentage){
 					result = "home 2pt field goal";
@@ -923,9 +1137,9 @@ function gameStart(team1, team2){
 				}
 			}
 				
-			else{
+			else if(num > homeThreePointShot){
 				num = Math.random();
-				console.log(team1.name + " shoots...")
+				console.log(team1.name + " shoots a 3 pointer...")
 				if(num <= homeTeamThreePointPercentage){
 					result = "home 3pt field goal";
 					team = team2.name;
@@ -936,9 +1150,9 @@ function gameStart(team1, team2){
 						result = "home 3pt field goal missed. Home offensive rebound";
 						team = team1.name;
 					}
-					else{
+					else {
 						result = "home 3pt field goal missed. Away defensive rebound";
-						team = team2.name;;
+						team = team2.name;
 					}
 				}
 			}
@@ -954,7 +1168,7 @@ function gameStart(team1, team2){
 			}
 			
 			else if(num > awayTurnover && num < awayThreePointShot){
-				console.log(team2.name + " shoots...")
+				console.log(team2.name + " shoots a 2 pointer...")
 				num = Math.random();
 				if(num <= awayTeamTwoPointPercentage){
 					result = "away 2pt field goal";
@@ -973,9 +1187,9 @@ function gameStart(team1, team2){
 				}
 			}
 				
-			else{
+			else if(num > awayThreePointShot){
 				num = Math.random();
-				console.log(team2.name + " shoots...")
+				console.log(team2.name + " shoots a 3 pointer...")
 				if(num <= awayTeamThreePointPercentage){
 					result = "away 3pt field goal";
 					team = team1.name;
@@ -995,6 +1209,7 @@ function gameStart(team1, team2){
 				}
 			}
 		}
+
 	}
 
 	//function calls
