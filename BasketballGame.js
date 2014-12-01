@@ -111,19 +111,19 @@ function getResult(result){
 					console.log(finalResult);
 					break;
 				case "home 2pt field goal missed. Away defensive rebound":
-					finalResult = name1 + " missed the shot. " + name2 + " rebound.";
+					finalResult = name1 + " missed the shot. " + name2 + " rebounded the ball.";
 					missedShot2ptHome++;
 					awayDefRebound++;
 					console.log(finalResult);
 					break;
 				case "home 3pt field goal missed. Home offensive rebound":
-					finalResult = name1 + " missed the shot. " + name2 + " rebound.";
+					finalResult = name1 + " missed the shot. " + name2 + " rebounded the ball.";
 					missedShot3ptHome++;
 					homeOffRebound++;
 					console.log(finalResult);
 					break;
 				case "home 3pt field goal missed. Away defensive rebound":
-					finalResult = name1 + " missed the shot." + name2 + " rebound.";
+					finalResult = name1 + " missed the shot." + name2 + " rebounded the ball.";
 					missedShot3ptHome++;
 					awayDefRebound++;
 					console.log(finalResult);
@@ -146,7 +146,7 @@ function getResult(result){
 					homeTurnover++;
 					break;
 				case "away 2pt field goal missed. Home defensive rebound":
-					finalResult = name2 + " missed the shot. " +  name1 + " rebound.";
+					finalResult = name2 + " missed the shot. " +  name1 + " rebounded the ball.";
 					missedShot2ptAway++;
 					homeDefRebound++;
 					console.log(finalResult);
@@ -158,7 +158,7 @@ function getResult(result){
 					console.log(finalResult);
 					break;	
 				case "away 3pt field goal missed. Home defensive rebound":
-					finalResult = name2 + " missed the shot." + name1 + " rebound.";
+					finalResult = name2 + " missed the shot." + name1 + " rebounded the ball.";
 					missedShot3ptAway++;
 					homeDefRebound++;
 					console.log(finalResult);
