@@ -46,22 +46,29 @@ var homeTurnovers = 0;
 var awayTurnovers = 0;
 
 // creates a team and generates an overall
-function Team(name, offOverall, twoPTRating, threePTRating, ftRating, reboundRating, defOverall, overall){
+function Team(name){
 	this.name = name;
 	var combinedOverall;
 	var combinedOffOverall;
 	var finalNum;
 	var num;
+	var rawNum;
+	var rawOverall
 	var findTwoPointRating = true;
 	var findThreePointRating = false;
 	var	findFTRating = false;
-	var findReboundRating = false;
+	var findOffReboundRating = false;
+	var findDefReboundRating = false;
+	var findStealsRating = false;
+	var findBlocksRating = false;
 
 	while(findTwoPointRating){
-		num = Math.random();
-		finalNum = Math.round(num) * 100;
+		num = Math.random() * 100;
+		rawNum = Math.round(num);
+		finalNum = rawNum;
 		if(finalNum > 75 && finalNum < 96){
-			this.twoPTRating = finalNum;
+			twoPTRating = finalNum;
+			this.twoPTRating = twoPTRating;
 			findTwoPointRating = false;
 			findThreePointRating = true;
 		}
@@ -70,10 +77,11 @@ function Team(name, offOverall, twoPTRating, threePTRating, ftRating, reboundRat
 		}
 	}
 	while(findThreePointRating){
-		num = Math.random();
-		finalNum = Math.round(num) * 100;
+		num = Math.random() * 100;
+		finalNum = Math.round(num);
 		if(finalNum > 75 && finalNum < 96){
-			this.threePTRating = finalNum;
+			threePTRating = finalNum;
+			this.threePTRating = threePTRating;
 			findThreePointRating = false;
 			findFTRating = true;
 		}
@@ -82,39 +90,92 @@ function Team(name, offOverall, twoPTRating, threePTRating, ftRating, reboundRat
 		}
 	}
 	while(findFTRating){
-		num = Math.random();
-		finalNum = Math.round(num) * 100;
+		num = Math.random() * 100;
+		rawNum = Math.round(num);
+		finalNum = rawNum;
 		if(finalNum > 75 && finalNum < 96){
-			this.ftRating = finalNum;
+			ftRating = finalNum;
+			this.ftRating = ftRating;
 			findFTRating = false;
-			findReboundRating = true;
+			findOffReboundRating = true;
 		}
 		else{
 			findFTRating = true;
 		}
 	}
-	while(findReboundRating){
-		num = Math.random();
-		finalNum = Math.round(num) * 100;
+	while(findOffReboundRating){
+		num = Math.random() * 100;
+		rawNum = Math.round(num);
+		finalNum = rawNum;
 		if(finalNum > 75 && finalNum < 96){
-			this.reboundRating = finalNum;
-			findReboundRating = false;
+			offReboundRating = finalNum;
+			this.offReboundRating = offReboundRating;
+			findOffReboundRating = false;
+			findDefReboundRating = true;
 		}
 		else{
-			findReboundRating = true;
+			findOffReboundRating = true;
 		}
 	}
+	while(findDefReboundRating){
+		num = Math.random() * 100;
+		rawNum = Math.round(num);
+		finalNum = rawNum;
+		if(finalNum > 75 && finalNum < 96){
+			defReboundRating = finalNum;
+			this.defReboundRating = defReboundRating;
+			findDefReboundRating = false;
+			findBlocksRating = true;
+		}
+		else{
+			findDefReboundRating = true;
+		}
+	}
+	while(findBlocksRating){
+		num = Math.random() * 100;
+		rawNum = Math.round(num);
+		finalNum = rawNum;
+		if(finalNum > 75 && finalNum < 96){
+			blocksRating = finalNum;
+			this.blocksRating = blocksRating;
+			findBlocksRating = false;
+			findStealsRating = true;
+		}
+		else{
+			findBlocksRating = true;
+		}
+	}
+	while(findStealsRating){
+		num = Math.random() * 100;
+		rawNum = Math.round(num);
+		finalNum = rawNum;
+		if(finalNum > 75 && finalNum < 96){
+			stealsRating = finalNum;
+			this.stealsRating = stealsRating;
+			findStealsRating = false;
+		}
 
-	console.log(twoPointRating + ", " + threePointRating + ", " + ftRatingm + ", " + reboundRating)
-	combinedOffOverall = twoPointRating + threePointRating + ftRating + reboundRating;
+		else{
+			findStealsRating = true;
+		}
+	}	
+
+
+	combinedOffOverall = twoPTRating + threePTRating + ftRating + offReboundRating;
+	combinedDefOverall = defReboundRating + blocksRating + stealsRating; 
 	var rawOffOverall = combinedOffOverall/4;
-	this.offOverall = Math.round(rawOffOverall);
-	combinedOverall = defOverall + offOverall;
-	var rawOverall = combinedOverall/2;
+	var rawDefOverall = combinedDefOverall/3;
+	offOverall = Math.round(rawOffOverall);
+	defOverall = Math.round(rawDefOverall);
+	this.offOverall = offOverall;
+	this.defOverall = defOverall;
+	combinedOverall = offOverall + defOverall;
+	rawOverall = combinedOverall/2;
 	overall = Math.round(rawOverall);
-	this.overall = overall;
 }
 
+
+/*
 // Set the name of the teams playing
 function TeamName(name1, name2){
 	this.name1 = name1;
@@ -218,17 +279,21 @@ function getResult(result){
 }
 
 // Sets the base percentage for each possession. 
-function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall){
+function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall, homeReboundRating, awayReboundRating){
 
 	this.homeOffOverall = homeOffOverall;
 	this.homeDefOverall = homeDefOverall;
 	this.awayOffOverall = awayOffOverall;
 	this.awayDefOverall = awayDefOverall;
+	this.homeReboundRating = homeReboundRating;
+	this.awayReboundRating = awayReboundRating;
 
 	var homeOffDifference = homeOffOverall - awayDefOverall;
 	var awayOffDifference = awayOffOverall - homeDefOverall;
 	var homeDefDifference = homeDefOverall - awayOffOverall;
 	var awayDefDifference = awayDefOverall - homeOffOverall;
+	var homeReboundDifference = homeReboundRating - awayReboundRating;
+	var awayReboundDifference = awayReboundRating- homeReboundRating;
 
 	if(homeOffOverall > awayDefOverall){
 
@@ -237,104 +302,83 @@ function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall)
 			case 1:
 				homeTurnover = .15 - .01;
 				homeThreePointShot = .66;
-				homeRebound = .50 + .01;
 				break;
 			case 2:
 				 homeTurnover = .15 - .02;
 				 homeThreePointShot = .65;
-				 homeRebound = .50 + .02;
 				 break;
 			case 3: 
 				homeTurnover = .15 - .03;
 				homeThreePointShot = .64;
-				homeRebound = .50 + .03;
 				break;
 			case 4: 
 				homeTurnover = .15 - .04;
 				homeThreePointShot = .63;
-				homeRebound = .50 + .04;
 				break;
 			case 5:
 				homeTurnover = .15 - .05;
 				homeThreePointShot = .62;
-				homeRebound = .50 + .05;
 				break;
 			case 6: 
 				homeTurnover = .15 - .06;
 				homeThreePointShot = .61;
-				homeRebound = .50 + .06;
 				break;
 			case 7:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .07;
 				break;
 			case 8:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;	
-				homeRebound = .50 + .08;
 				break;
 			case 9:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .09;
 				break;	
 			case 10:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .10;
 				break;		
 			case 11:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .11;	
 				break;	
 			case 12:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .12;
 				break;
 			case 13:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .13;
 				break;
 			case 14:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .14;
 				break;
 			case 15:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .15;
 				break;
 			case 16:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .15;
 				break;
 			case 17:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .15;
 				break;
 			case 18:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .15;
 				break;
 			case 19:
 				homeTurnover = .15 - .07;
 				homeThreePointShot = .60;
-				homeRebound = .50 + .15;
 				break;
 			default:
 				break;
 		}		
-
 	}
-
 	if(homeDefOverall > awayOffOverall){
 
 		switch(homeDefDifference){
@@ -342,104 +386,83 @@ function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall)
 			case 1:
 				homeTurnover = .15 + .01;
 				homeThreePointShot = .61;
-				homeRebound = .50 - .01;
 				break;
 			case 2:
 				 homeTurnover = .15 + .02;
 				 homeThreePointShot = .62;
-				 homeRebound = .50 - .02;
 				 break;
 			case 3: 
 				homeTurnover = .15 + .03;
 				homeThreePointShot = .63;
-				homeRebound = .50 - .03;
 				break;
 			case 4: 
 				homeTurnover = .15 + .04;
 				homeThreePointShot = .64;
-				homeRebound = .50 - .04;
 				break;
 			case 5:
 				homeTurnover = .15 + .05;
 				homeThreePointShot = .65;
-				homeRebound = .50 - .05;
 				break;
 			case 6: 
 				homeTurnover = .15 + .06;
 				homeThreePointShot = .66;
-				homeRebound = .50 - .06;
 				break;
 			case 7:
 				homeTurnover = .15 + .07;
 				homeThreePointShot = .67;
-				homeRebound = .50 - .07;
 				break;
 			case 8:
 				homeTurnover = .15 + .08;
 				homeThreePointShot = .68;	
-				homeRebound = .50 - .08;
 				break;
 			case 9:
 				homeTurnover = .15 + .09;
 				homeThreePointShot = .69;
-				homeRebound = .50 - .09;
 				break;	
 			case 10:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .10;
 				break;		
 			case 11:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .11;	
 				break;	
 			case 12:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .12;
 				break;
 			case 13:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .13;
 				break;
 			case 14:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .14;
 				break;
 			case 15:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .15;
 				break;
 			case 16:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .15;
 				break;
 			case 17:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .15;
 				break;
 			case 18:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .15;
 				break;
 			case 19:
 				homeTurnover = .15 + .10;
 				homeThreePointShot = .70;
-				homeRebound = .50 - .15;
 				break;
 			default:
 				break;
 		}		
-
 	}
-
 	if(awayOffOverall > homeDefOverall){
 
 		switch(awayOffDifference){
@@ -447,104 +470,83 @@ function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall)
 			case 1:
 				awayTurnover = .15 - .01;
 				awayThreePointShot = .66;
-				awayRebound = .50 + .01;
 				break;
 			case 2:
 				 awayTurnover = .15 - .02;
 				 awayThreePointShot = .65;
-				 awayRebound = .50 + .02;
 				 break;
 			case 3: 
 				awayTurnover = .15 - .03;
 				awayThreePointShot = .64;
-				awayRebound = .50 + .03;
 				break;
 			case 4: 
 				awayTurnover = .15 - .04;
 				awayThreePointShot = .63;
-				awayRebound = .50 + .04;
 				break;
 			case 5:
 				awayTurnover = .15 - .05;
 				awayThreePointShot = .62;
-				awayRebound = .50 + .05;
 				break;
 			case 6: 
 				awayTurnover = .15 - .06;
 				awayThreePointShot = .61;
-				awayRebound = .50 + .06;
 				break;
 			case 7:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .07;
 				break;
 			case 8:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;	
-				awayRebound = .50 + .08;
 				break;
 			case 9:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .09;
 				break;	
 			case 10:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .10;
 				break;		
 			case 11:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .11;	
 				break;	
 			case 12:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .12;
 				break;
 			case 13:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .13;
 				break;
 			case 14:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .14;
 				break;
 			case 15:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .15;
 				break;
 			case 16:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .15;
 				break;
 			case 17:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .15;
 				break;
 			case 18:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .15;
 				break;
 			case 19:
 				awayTurnover = .15 - .07;
 				awayThreePointShot = .60;
-				awayRebound = .50 + .15;
 				break;
 			default:
 				break;
 		}		
-
 	}
-
 	if(awayDefOverall > homeOffOverall){
 
 		switch(awayDefDifference){
@@ -552,115 +554,224 @@ function defense(homeOffOverall, homeDefOverall, awayOffOverall, awayDefOverall)
 			case 1:
 				awayTurnover = .15 + .01;
 				awayThreePointShot = .61;
-				awayRebound = .50 - .01;
 				break;
 			case 2:
 				 awayTurnover = .15 + .02;
 				 awayThreePointShot = .62;
-				 awayRebound = .50 - .02;
 				 break;
 			case 3: 
 				awayTurnover = .15 + .03;
 				awayThreePointShot = .63;
-				awayRebound = .50 - .03;
 				break;
 			case 4: 
 				awayTurnover = .15 + .04;
 				awayThreePointShot = .64;
-				awayRebound = .50 - .04;
 				break;
 			case 5:
 				awayTurnover = .15 + .05;
 				awayThreePointShot = .65;
-				awayRebound = .50 - .05;
 				break;
 			case 6: 
 				awayTurnover = .15 + .06;
 				awayThreePointShot = .66;
-				awayRebound = .50 - .06;
 				break;
 			case 7:
 				awayTurnover = .15 + .07;
 				awayThreePointShot = .67;
-				awayRebound = .50 - .07;
 				break;
 			case 8:
 				awayTurnover = .15 + .08;
 				awayThreePointShot = .68;	
-				awayRebound = .50 - .08;
 				break;
 			case 9:
 				awayTurnover = .15 + .09;
 				awayThreePointShot = .69;
-				awayRebound = .50 - .09;
 				break;	
 			case 10:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .10;
 				break;		
 			case 11:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .11;	
 				break;	
 			case 12:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .12;
 				break;
 			case 13:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .13;
 				break;
 			case 14:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .14;
 				break;
 			case 15:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .15;
 				break;
 			case 16:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .15;
 				break;
 			case 17:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .15;
 				break;
 			case 18:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .15;
 				break;
 			case 19:
 				awayTurnover = .15 + .10;
 				awayThreePointShot = .70;
-				awayRebound = .50 - .15;
 				break;
 			default:
 				break;
 		}		
+	}
+	if(homeReboundRating > awayReboundRating){
 
+		switch(homeReboundDifference){
+
+			case 1:
+				homeRebound = .50 + .01;
+				break;
+			case 2:
+				homeRebound = .50 + .02;
+				break;
+			case 3: 
+				homeRebound = .50 + .03;
+				break;
+			case 4: 
+				homeRebound = .50 + .04;
+				break;
+			case 5:
+				homeRebound = .50 + .05;
+				break;
+			case 6: 
+				homeRebound = .50 + .06;
+				break;
+			case 7:
+				homeRebound = .50 + .07;
+				break;
+			case 8:
+				homeRebound = .50 + .08;
+				break;
+			case 9:
+				homeRebound = .50 + .09;
+				break;	
+			case 10:
+				homeRebound = .50 + .10;
+				break;		
+			case 11:
+				homeRebound = .50 + .11;	
+				break;	
+			case 12:
+				homeRebound = .50 + .12;
+				break;
+			case 13:
+				homeRebound = .50 + .13;
+				break;
+			case 14:
+				homeRebound = .50 + .14;
+				break;
+			case 15:
+				homeRebound = .50 + .16;
+				break;
+			case 16:
+				homeRebound = .50 + .17;
+				break;
+			case 17:
+				homeRebound = .50 + .18;
+				break;
+			case 18:
+				homeRebound = .50 + .19;
+				break;
+			case 19:
+				homeRebound = .50 + .20;
+				break;
+			default:
+				break;
+		}		
+	}
+	if(awayReboundRating > homeReboundRating){
+
+		switch(awayReboundDifference){
+
+			case 1:
+				awayRebound = .50 + .01;
+				break;
+			case 2:
+				 awayRebound = .50 + .02;
+				 break;
+			case 3: 
+				awayRebound = .50 + .03;
+				break;
+			case 4: 
+				awayRebound = .50 + .04;
+				break;
+			case 5:
+				awayRebound = .50 + .05;
+				break;
+			case 6: 
+				awayRebound = .50 + .06;
+				break;
+			case 7:
+				awayRebound = .50 + .07;
+				break;
+			case 8:
+				awayRebound = .50 + .08;
+				break;
+			case 9:
+				awayRebound = .50 + .09;
+				break;	
+			case 10:
+				awayRebound = .50 + .10;
+				break;		
+			case 11:
+				awayRebound = .50 + .11;	
+				break;	
+			case 12:
+				awayRebound = .50 + .12;
+				break;
+			case 13:
+				awayRebound = .50 + .13;
+				break;
+			case 14:
+				awayRebound = .50 + .14;
+				break;
+			case 15:
+				awayRebound = .50 + .16;
+				break;
+			case 16:
+				awayRebound = .50 + .17;
+				break;
+			case 17:
+				awayRebound = .50 + .18;
+				break;
+			case 18:
+				awayRebound = .50 + .19;
+				break;
+			case 19:
+				awayRebound = .50 + .20;
+				break;
+			default:
+				break;
+		}		
 	}
 }
 
-/*
 // Gets the offensive percentages for both teams
 function offensivePercentages(homeTeamTwoPoint, homeTeamThreePoint, homeTeamFT, awayTeamTwoPoint, awayTeamThreePoint, awayTeamFT){
 
-	this.homeTeamTwoPoint = homeTeamTwoPointRating;
-	this.awayTeamTwoPoint = awayTeamTwoPointRating;
-	this.homeTeamThreePoint = homeTeamThreePointRating;
-	this.awayTeamThreePoint = awayTeamThreePointRating;
-	this.homeTeamFT = homeFTRating;
-	this.awayTeamFT = awayFTRating;
+	this.homeTeamTwoPoint = homeTeamTwoPoint;
+	this.awayTeamTwoPoint = awayTeamTwoPoint;
+	this.homeTeamThreePoint = homeTeamThreePoint;
+	this.awayTeamThreePoint = awayTeamThreePoint;
+	this.homeTeamFT = homeTeamFT;
+	this.awayTeamFT = awayTeamFT;
 
 	var findHomeTwoPointPercentage = true;
 	var findAwayTwoPointPercentage = false;
@@ -671,340 +782,286 @@ function offensivePercentages(homeTeamTwoPoint, homeTeamThreePoint, homeTeamFT, 
 	var num;
 	var finalNum;
 
-	while(findHomeTwoPointPercentage){
-		if(homeTeamTwoPointRating > 75 && homeTeamTwoPointRating < 96){
-			switch(finalNum){
-				case 75:
-					homeTeamTwoPointPercentage = .35;
-					break;
-				case 76:
-					homeTeamTwoPointPercentage = .36;
-					break;
-				case 77:
-					homeTeamTwoPointPercentage = .37;
-					break;
-				case 78:
-					homeTeamTwoPointPercentage = .38;
-					break;
-				case 79:
-					homeTeamTwoPointPercentage = .39;
-					break;
-				case 80:
-					homeTeamTwoPointPercentage = .41;
-					break;
-				case 81:
-					homeTeamTwoPointPercentage = .40;
-					break;
-				case 82:
-					homeTeamTwoPointPercentage = .41;
-					break;
-				case 83:		
-					homeTeamTwoPointPercentage = .42;
-					break;
-				case 84:
-					homeTeamTwoPointPercentage = .43;
-					break;
-				case 85:
-					homeTeamTwoPointPercentage = .44;
-					break;
-				case 86:
-					homeTeamTwoPointPercentage = .45;
-					break;
-				case 87:
-					homeTeamTwoPointPercentage = .46;
-					break;
-				case 88:
-					homeTeamTwoPointPercentage = .47;
-					break;
-				case 89:
-					homeTeamTwoPointPercentage = .48;
-					break;
-				case 90:
-					homeTeamTwoPointPercentage = .49;
-					break;
-				case 91:
-					homeTeamTwoPointPercentage = .50;
-					break;
-				case 92:
-					homeTeamTwoPointPercentage = .51;
-					break;
-				case 93:
-					homeTeamTwoPointPercentage = .52;
-					break;
-				case 94:
-					homeTeamtwoPointPercentage = .53;
-					break;
-				case 95:
-					homeTeamTwoPointPercentage = .54;
-					break;
-				}
-			findHomeTwoPointRating = false;
-		}
-		else{
-			findHomeTwoPointRating = true;
-		}
-	}
-	while(findAwayTwoPointPercentage){
-		num = Math.random();
-		finalNum = Math.round(num);
-		awayTeamThreePointRating = finalNum;
-		if(awayTeamThreePointRating > 75 && awayTeamThreePointRating  < 96){
-			switch(finalNum){
-				case 75:
-					awayTeamTwoPointPercentage = .35;
-					break;
-				case 76:
-					awayTeamTwoPointPercentage = .36;
-					break;
-				case 77:
-					awayTeamTwoPointPercentage = .37;
-					break;
-				case 78:
-					awayTeamTwoPointPercentage = .38;
-					break;
-				case 79:
-					awayTeamTwoPointPercentage = .39;
-					break;
-				case 80:
-					awayTeamTwoPointPercentage = .41;
-					break;
-				case 81:
-					awayTeamTwoPointPercentage = .40;
-					break;
-				case 82:
-					awayTeamTwoPointPercentage = .41;
-					break;
-				case 83:		
-					awayTeamTwoPointPercentage = .42;
-					break;
-				case 84:
-					awayTeamTwoPointPercentage = .43;
-					break;
-				case 85:
-					awayTeamTwoPointPercentage = .44;
-					break;
-				case 86:
-					awayTeamTwoPointPercentage = .45;
-					break;
-				case 87:
-					awayTeamTwoPointPercentage = .46;
-					break;
-				case 88:
-					awayTeamTwoPointPercentage = .47;
-					break;
-				case 89:
-					awayTeamTwoPointPercentage = .48;
-					break;
-				case 90:
-					awayTeamTwoPointPercentage = .49;
-					break;
-				case 91:
-					awayTeamTwoPointPercentage = .50;
-					break;
-				case 92:
-					awayTeamTwoPointPercentage = .51;
-					break;
-				case 93:
-					awayTeamTwoPointPercentage = .52;
-					break;
-				case 94:
-					awayTeamTwoPointPercentage = .53;
-					break;
-				case 95:
-					awayTeamTwoPointPercentage = .54;
-					break;
-				}
-			findAwayTwoPointRating = false;
-			findHomeThreePointRating = true;
-		}
-		else{
-			findAwayTwoPointRating = true;
-		}
-	}
-	while(findHomeThreePointPercentage){
-		num = Math.random();
-		finalNum = Math.round(num);
-		homeThreePointRating = finalNum;
-		if(homeThreePointRating > 76 && homeThreePointRating < 96){
-			switch(homeThreePointRating){
-				case 76:
-					homeThreePointPercentage = .25;
-					break;
-				case 77:
-					homeThreePointPercentage = .26;
-					break;
-				case 78:
-					homeThreePointPercentage = .27;
-					break;
-				case 79:
-					homeThreePointPercentage = .29;
-					break;
-				case 80:
-					homeThreePointPercentage = .30;
-					break;
-				case 81:
-					homeThreePointPercentage = .31;
-					break;
-				case 82:
-					homeThreePointPercentage = .32;
-					break;
-				case 83:
-					homeThreePointPercentage = .33;
-					break;
-				case 84:
-					homeThreePointPercentage = .34;
-					break;
-				case 85:
-					homeThreePointPercentage = .35;
-					break;
-				case 86:
-					homeThreePointPercentage = .35;
-					break;
-				case 87:
-					homeThreePointPercentage = .35;
-					break;
-				case 88:
-					homeThreePointPercentage = .35;
-					break;
-				case 89:
-					homeThreePointPercentage = .36;
-					break;
-				case 90:
-					homeThreePointPercentage = .38;
-					break;
-				case 91:
-					homeThreePointPercentage = .36;
-					break;
-				case 92:
-					homeThreePointPercentage = .40;
-					break;
-				case 93:
-					homeThreePointPercentage = .40;
-					break;
-				case 94:
-					homeThreePointPercentage = .41;
-					break;
-				case 95:
-					homeThreePointPercentage= .45;
-					break;
-			}
-			findHomeThreePointRating = false;
-			findAwayThreePointRating = true;
-		}
 
-		else{
-			findHomeThreePointRating = true;
-		}
+	switch(homeTeamTwoPoint){
+		case 75:
+			homeTeamTwoPointPercentage = .35;
+			break;
+		case 76:
+			homeTeamTwoPointPercentage = .36;
+			break;
+		case 77:
+			homeTeamTwoPointPercentage = .37;
+			break;
+		case 78:
+			homeTeamTwoPointPercentage = .38;
+			break;
+		case 79:
+			homeTeamTwoPointPercentage = .39;
+			break;
+		case 80:
+			homeTeamTwoPointPercentage = .41;
+			break;
+		case 81:
+			homeTeamTwoPointPercentage = .40;
+			break;
+		case 82:
+			homeTeamTwoPointPercentage = .41;
+			break;
+		case 83:		
+			homeTeamTwoPointPercentage = .42;
+			break;
+		case 84:
+			homeTeamTwoPointPercentage = .43;
+			break;
+		case 85:
+			homeTeamTwoPointPercentage = .44;
+			break;
+		case 86:
+			homeTeamTwoPointPercentage = .45;
+			break;
+		case 87:
+			homeTeamTwoPointPercentage = .46;
+			break;
+		case 88:
+			homeTeamTwoPointPercentage = .47;
+			break;
+		case 89:
+			homeTeamTwoPointPercentage = .48;
+			break;
+		case 90:
+			homeTeamTwoPointPercentage = .49;
+			break;
+		case 91:
+			homeTeamTwoPointPercentage = .50;
+			break;
+		case 92:
+			homeTeamTwoPointPercentage = .51;
+			break;
+		case 93:
+			homeTeamTwoPointPercentage = .52;
+			break;
+		case 94:
+			homeTeamtwoPointPercentage = .53;
+			break;
+		case 95:
+			homeTeamTwoPointPercentage = .54;
+			break;
+		default:
+			break;
 	}
-	while(findAwayThreePointPercentage){
-		num = Math.random();
-		finalNum = Math.round(num);
-		awayTeamThreePointRating = finalNum;
-		if(awayTeamThreePointRating  > 76 && awayTeamThreePointRating  < 96){
-			switch(awayTeamThreePointRating ){
-				case 76:
-					awayThreePointPercentage = .25;
-					break;
-				case 77:
-					awayThreePointPercentage = .26;
-					break;
-				case 78:
-					awayThreePointPercentage = .27;
-					break;
-				case 79:
-					awayThreePointPercentage = .29;
-					break;
-				case 80:
-					awayThreePointPercentage = .30;
-					break;
-				case 81:
-					awayThreePointPercentage = .31;
-					break;
-				case 82:
-					awayThreePointPercentage = .32;
-					break;
-				case 83:
-					awayThreePointPercentage = .33;
-					break;
-				case 84:
-					awayThreePointPercentage = .34;
-					break;
-				case 85:
-					awayThreePointPercentage = .35;
-					break;
-				case 86:
-					awayThreePointPercentage = .35;
-					break;
-				case 87:
-					awayThreePointPercentage = .35;
-					break;
-				case 88:
-					awayThreePointPercentage = .35;
-					break;
-				case 89:
-					awayThreePointPercentage = .36;
-					break;
-				case 90:
-					awayThreePointPercentage = .38;
-					break;
-				case 91:
-					awayThreePointPercentage = .36;
-					break;
-				case 92:
-					awayThreePointPercentage = .40;
-					break;
-				case 93:
-					awayThreePointPercentage = .40;
-					break;
-				case 94:
-					awayThreePointPercentage = .41;
-					break;
-				case 95:
-					awayThreePointPercentage= .45;
-					break;
-			}
-			findAwayThreePointRating = false;
-			findHomeFTPercentage = true;
-		}
 
-		else{
-			findAwayThreePointRating = true;
-		}
+	switch(awayTeamTwoPoint){
+		case 75:
+			awayTeamTwoPointPercentage = .35;
+			break;
+		case 76:
+			awayTeamTwoPointPercentage = .36;
+			break;
+		case 77:
+			awayTeamTwoPointPercentage = .37;
+			break;
+		case 78:
+			awayTeamTwoPointPercentage = .38;
+			break;
+		case 79:
+			awayTeamTwoPointPercentage = .39;
+			break;
+		case 80:
+			awayTeamTwoPointPercentage = .41;
+			break;
+		case 81:
+			awayTeamTwoPointPercentage = .40;
+			break;
+		case 82:
+			awayTeamTwoPointPercentage = .41;
+			break;
+		case 83:		
+			awayTeamTwoPointPercentage = .42;
+			break;
+		case 84:
+			awayTeamTwoPointPercentage = .43;
+			break;
+		case 85:
+			awayTeamTwoPointPercentage = .44;
+			break;
+		case 86:
+			awayTeamTwoPointPercentage = .45;
+			break;
+		case 87:
+			awayTeamTwoPointPercentage = .46;
+			break;
+		case 88:
+			awayTeamTwoPointPercentage = .47;
+			break;
+		case 89:
+			awayTeamTwoPointPercentage = .48;
+			break;
+		case 90:
+			awayTeamTwoPointPercentage = .49;
+			break;
+		case 91:
+			awayTeamTwoPointPercentage = .50;
+			break;
+		case 92:
+			awayTeamTwoPointPercentage = .51;
+			break;
+		case 93:
+			awayTeamTwoPointPercentage = .52;
+			break;
+		case 94:
+			awayTeamTwoPointPercentage = .53;
+			break;
+		case 95:
+			awayTeamTwoPointPercentage = .54;
+			break;
+		default:
+			break;
 	}
-	while(findHomeFTPercentage){
-		num = Math.random();
-		finalNum = Math.round(num) * 100;
-		homeFTRating = finalNum;
-		if(homeFTRating > 57 && homeFTRating < 97){	
-			homeTeamFTPercentage = num;
-			findHomeFTPercentage = false;
-			findAwayFTPercentage = true;
-		}
-		else{
-			findHomeFTPercentage = true;
-		}
+	
+	switch(homeTeamThreePoint){
+		case 76:
+			homeThreePointPercentage = .25;
+			break;
+		case 77:
+			homeThreePointPercentage = .26;
+			break;
+		case 78:
+			homeThreePointPercentage = .27;
+			break;
+		case 79:
+			homeThreePointPercentage = .29;
+			break;
+		case 80:
+			homeThreePointPercentage = .30;
+			break;
+		case 81:
+			homeThreePointPercentage = .31;
+			break;
+		case 82:
+			homeThreePointPercentage = .32;
+			break;
+		case 83:
+			homeThreePointPercentage = .33;
+			break;
+		case 84:
+			homeThreePointPercentage = .34;
+			break;
+		case 85:
+			homeThreePointPercentage = .35;
+			break;
+		case 86:
+			homeThreePointPercentage = .35;
+			break;
+		case 87:
+			homeThreePointPercentage = .35;
+			break;
+		case 88:
+			homeThreePointPercentage = .35;
+			break;
+		case 89:
+			homeThreePointPercentage = .36;
+			break;
+		case 90:
+			homeThreePointPercentage = .38;
+			break;
+		case 91:
+			homeThreePointPercentage = .36;
+			break;
+		case 92:
+			homeThreePointPercentage = .40;
+			break;
+		case 93:
+			homeThreePointPercentage = .40;
+			break;
+		case 94:
+			homeThreePointPercentage = .41;
+			break;
+		case 95:
+			homeThreePointPercentage= .45;
+			break;
+		default:
+			break;
 	}
-	while(findAwayFTPercentage){
-		num = Math.random();
-		finalNum = Math.round(num) * 100;
-		awayFTRating = finalNum;
-		if(awayFTRating > 57 && awayFTRating < 97){
-			awayFTRating = num;
-			findAwayFTPercentage = false;
-			findHomeReboundRating = true;
-		}
-		else{
-			findAwayFTPercentage = true;
-		}
-	}	
+	
+	switch(awayTeamThreePoint){
+		case 76:
+			awayThreePointPercentage = .25;
+			break;
+		case 77:
+			awayThreePointPercentage = .26;
+			break;
+		case 78:
+			awayThreePointPercentage = .27;
+			break;
+		case 79:
+			awayThreePointPercentage = .29;
+			break;
+		case 80:
+			awayThreePointPercentage = .30;
+			break;
+		case 81:
+			awayThreePointPercentage = .31;
+			break;
+		case 82:
+			awayThreePointPercentage = .32;
+			break;
+		case 83:
+			awayThreePointPercentage = .33;
+			break;
+		case 84:
+			awayThreePointPercentage = .34;
+			break;
+		case 85:
+			awayThreePointPercentage = .35;
+			break;
+		case 86:
+			awayThreePointPercentage = .35;
+			break;
+		case 87:
+			awayThreePointPercentage = .35;
+			break;
+		case 88:
+			awayThreePointPercentage = .35;
+			break;
+		case 89:
+			awayThreePointPercentage = .36;
+			break;
+		case 90:
+			awayThreePointPercentage = .38;
+			break;
+		case 91:
+			awayThreePointPercentage = .36;
+			break;
+		case 92:
+			awayThreePointPercentage = .40;
+			break;
+		case 93:
+			awayThreePointPercentage = .40;
+			break;
+		case 94:
+			awayThreePointPercentage = .41;
+			break;
+		case 95:
+			awayThreePointPercentage= .45;
+			break;
+		default:
+			break;
+	}
+
+	homeFTRating = homeTeamFT / 100;
+	awayFTRating = awayTeamFT / 100;
+
 }
 */
-//Teams
-teams[0] = new Team('Minnesota', 0, 0, 0, 0, 0, 0, 0);
-teams[1] = new Team('Iowa', 0, 0, 0, 0, 0, 0, 0);
-teams[2] = new Team('Michigan', 0, 0, 0, 0, 0, 0, 0);
-teams[3] = new Team('Wisconsin', 0, 0, 0, 0, 0, 0, 0);
 
+//Teams
+teams[0] = new Team();
+teams[1] = new Team();
+teams[2] = new Team();
+teams[3] = new Team();
+
+//offensivePercentages(0, teams[0].threePTRating, teams[0].ftRating);
 
 // Inital possession
 team = teams[3].name;
@@ -1179,6 +1236,4 @@ function gameStart(team1, team2){
 // delay = setInterval(function(){gameStart(teams[3], teams[1])}, 5000);
 // console.log(teams[3].overall + ", " + teams[1].overall)
 
-//offensivePercentages(teams[0].offOverall, teams[0].twoPointRating, teams[0].threePointRating, teams[0].ftRating)
-
-console.log(teams[0].offOverall + ", " + teams[0].twoPTRating + ", " + teams[0].threePTRating + ", " + teams[0].ftRating)
+//offensivePercentages(teams[0].twoPTRating, teams[0].threePTRating)
