@@ -31,10 +31,10 @@ var homeTurnover;
 var awayTurnover;
 var homeThreePointShot;
 var awayThreePointShot;
-var homeOffRebound;
-var awayOffRebound;
-var homeDefRebound;
-var awayDefRebound;
+var homeOffReboundPercentage;
+var awayOffReboundPercentage;
+var homeDefReboundPercentage;
+var awayDefReboundPercentage;
 var teams = new Array();
 var delay = 0;
 var result;
@@ -54,6 +54,12 @@ var awayOffRebound = 0;
 var awayDefRebound = 0;
 var homeTurnovers = 0;
 var awayTurnovers = 0;
+var homeTotalBlocks = 0;
+var awayTotalBlocks = 0;
+var homeFTMade = 0;
+var homeFTMissed = 0;
+var awayFTMissed = 0;
+var awayFTMade = 0;
 
 // creates a team and generates an overall
 function Team(name){
@@ -188,102 +194,6 @@ function Team(name){
 function TeamName(name1, name2){
 	this.name1 = name1;
 	this.name2 = name2;
-}
-
-// Gets the result and prints it. Points are added here. 
-function getResult(result){
-
-			this.result = result;
-			var finalResult;
-
-			switch(result){
-				case "home 2pt field goal missed. Home offensive rebound":
-					finalResult = name1 + " missed the shot. " + name1 + " rebounded the ball.";
-					missedShot2ptHome++;
-					homeOffRebound++;
-					console.log(finalResult);
-					break;
-				case "home 2pt field goal missed. Away defensive rebound":
-					finalResult = name1 + " missed the shot. " + name2 + " rebounded the ball.";
-					missedShot2ptHome++;
-					awayDefRebound++;
-					console.log(finalResult);
-					break;
-				case "home 3pt field goal missed. Home offensive rebound":
-					finalResult = name1 + " missed the shot. " + name2 + " rebounded the ball.";
-					missedShot3ptHome++;
-					homeOffRebound++;
-					console.log(finalResult);
-					break;
-				case "home 3pt field goal missed. Away defensive rebound":
-					finalResult = name1 + " missed the shot." + name2 + " rebounded the ball.";
-					missedShot3ptHome++;
-					awayDefRebound++;
-					console.log(finalResult);
-					break;
-				case "home 2pt field goal":
-					finalResult = name1 + " scored two points!";
-					console.log(finalResult);
-					madeHome2ptShot++;
-					homeTeamScore = homeTeamScore + 2;
-					break;
-				case "home 3pt field goal":
-					finalResult = name1 + " scored three points!";
-					console.log(finalResult);
-					madeHome3ptShot++;
-					homeTeamScore = homeTeamScore + 3;
-					break;
-				case "home turnover":
-					finalResult = name1 + " turnover.";
-					console.log(finalResult);
-					homeTurnovers++;
-					break;
-				case "away 2pt field goal missed. Home defensive rebound":
-					finalResult = name2 + " missed the shot. " +  name1 + " rebounded the ball.";
-					missedShot2ptAway++;
-					homeDefRebound++;
-					console.log(finalResult);
-					break;
-				case "away 2pt field goal missed. Away offensive rebound":
-					finalResult = name2 + " rebounded the ball.";
-					missedShot2ptAway++;
-					awayOffRebound;
-					console.log(finalResult);
-					break;	
-				case "away 3pt field goal missed. Home defensive rebound":
-					finalResult = name2 + " missed the shot." + name1 + " rebounded the ball.";
-					missedShot3ptAway++;
-					homeDefRebound++;
-					console.log(finalResult);
-					homeTeam = true;
-					break;
-				case "away 3pt field goal missed. Away offensive rebound":
-					finalResult = name2 + " rebounded the ball.";
-					missedShot3ptAway++;
-					awayOffRebound++;
-					console.log(finalResult);
-					break;	
-				case "away 2pt field goal":
-					finalResult = name2 + " scored two points!";
-					madeAway2ptShot++;
-					console.log(finalResult);
-					awayTeamScore = awayTeamScore + 2;
-					break;
-				case "away 3pt field goal":
-					finalResult = name2 + " scored three points!";
-					madeAway3ptShot++;
-					awayTeamScore = awayTeamScore + 3;
-					console.log(finalResult)
-					break;
-				case "away turnover":
-					finalResult = name2 + " turnover.";
-					awayTurnovers++;
-					console.log(finalResult)
-					break;
-				default:
-					finalResult = "Nothing happened";
-					console.log(finalResult);
-			}	
 }
 
 // Sets the base percentage for each possession. 
@@ -1535,17 +1445,17 @@ function defensivePercentages(homeStealsRating, homeBlocksRating, awayStealsRati
 }
 
 //Teams
-teams[0] = new Team();
-teams[1] = new Team();
-teams[2] = new Team();
-teams[3] = new Team();
+teams[0] = new Team("Minnesota");
+teams[1] = new Team("Wisconsin");
+teams[2] = new Team("Los Angeles");
+teams[3] = new Team("New York");
 
 //offensivePercentages(0, teams[0].threePTRating, teams[0].ftRating);
 
 // Inital possession
 team = teams[3].name;
 
-/*
+
 // Game starts
 function gameStart(team1, team2){
 
@@ -1554,17 +1464,17 @@ function gameStart(team1, team2){
 
 
 	TeamName(team1.name, team2.name);
-	defense(team1.offOverall, team1.defOverall, team2.offOverall, team2.defOverall);
+	defense(team1.offOverall, team1.defOverall, team1.offReboundRating, team1.defReboundRating,  team2.offOverall, team2.defOverall, team2.offReboundRating, team2.defReboundRating);
+	offensivePercentages(team1.twoPTRating, team1.threePTRating, team1.ftRating, team2.twoPTRating, team2.threePTRating, team2.ftRating);
+	defensivePercentages(team1.stealsRating, team1.blocksRating, team2.stealsRating, team2.blocksRating);
 
 	// Check to see who has possession
 	function currentPossession(team){
 		this.team = team;
-
 		if(team == team2.name){
 
 			currentPossession = team2.name;
 		}
-
 		if(team === team1.name){
 			currentPossession = team1.name;
 		}
@@ -1576,104 +1486,511 @@ function gameStart(team1, team2){
 		this.possession = possession;
 		// Home Team's possession
 		if(possession == team1.name){
-			
 			num = Math.random();
 			if(num < homeTurnover){
-				result = "home turnover";
+				console.log(team1.name + " turnover")
+				homeTurnovers++;
 				team = team2.name;
 			}
 			else if(num > homeTurnover && num < homeThreePointShot){
 				console.log(team1.name + " shoots a 2 pointer...")
 				num = Math.random();
-				if(num <= homeTeamTwoPointPercentage){
-					result = "home 2pt field goal";
-					team = team2.name;
-				}
-				else{
+				if(num <= awayBlocksPercentage){
+					console.log(team2.name + " blocked the shot!")
+					console.log("Loose ball...")
+					homeTotalBlocks++;
 					num = Math.random();
-					if(num < homeRebound){
-						result = "home 2pt field goal missed. Home offensive rebound";
+					if(num < .50){
+						console.log(team1.name + " has possession");
 						team = team1.name;
 					}
 					else{
-						result = "home 2pt field goal missed. Away defensive rebound";
-						team = team2.name;
+						console.log(team2.name + " has possession");
+						team = team2.name; 
 					}
 				}
-			}
-				
+				else if(num <= awayFoulPercentage){
+					console.log(team2.name + " foul..")
+					num = Math.random();
+					if(num <= .35){
+						console.log(team1.name + " shoots. Three point play!")
+						homeTeamScore = homeTeamScore + 2;
+						console.log("One foul shot for " + name1)
+						console.log(team1.name + " shoots the foul shot..")
+						num = Math.random();
+						if(num <= homeTeamFTPercentage){
+							console.log(team1.name + "  made the free throw");
+							homeTeamScore++;
+							team = team2.name;
+						}
+						else{
+							console.log(team1.name + " missed the free throw.")
+							num = Math.random();
+							if(num <= homeOffReboundPercentage){
+								console.log(team1.name + " missed the free throw. " + team1.name + " offensive rebound.")
+								homeOffRebound++;
+								team = team1.name;
+							}
+							else{
+								console.log(team1.name + " missed the free throw. " + team2.name + " defensive rebound.")
+								awayDefRebound++;
+								team = team2.name;
+							}
+						}
+					}
+					else{
+						console.log(team1.name + " missed the shot. " + team1.name + " has two free throws")
+						console.log(team1.name + " shoots the first free throw")
+						num = Math.random();
+						if(num <= homeTeamFTPercentage){
+							console.log("Free throw made")
+							homeTeamScore++;
+							num = Math.random();
+							console.log(team1.name + " shoots the second free throw..")
+							if(num <= homeTeamFTPercentage){
+								console.log("Free throw made")
+								homeTeamScore++;
+								team = team2.name;
+							}
+							else{
+								console.log("Free throw missed")
+								num = Math.random();
+								if(num <= homeOffRebound){
+									console.log(team1.name + " offensive rebound.")
+									homeOffRebound++;
+									team = team1.name;
+								}	
+								else{
+									console.log(team2.name + " defensive rebound.")
+									homeDefRebound++;
+									team = team2.name;
+								}
+							}
+						}
+						else{
+							console.log("Free throw missed")
+							num = Math.random();
+							if(num <= homeOffReboundPercentage){
+								console.log(team1.name + " offensive rebound.")
+								team = team1.name;
+								homeOffRebound++;
+							}
+							else{
+								console.log(team2.name + " defensive rebound.")
+								team = team2.name;
+								awayDefRebound++;
+							}
+						}
+					}
+				}
+				else{
+					if(num <= homeTeamTwoPointPercentage){
+					console.log(team1.name + " scored two points!")
+					madeHome2ptShot++;
+					homeTeamScore = homeTeamScore + 2;
+					}
+					else{
+						console.log(team1.name + " missed the shot..")
+						num = Math.random();
+						if(num < homeRebound){
+							console.log(team1.name + " offensive rebound.")
+							team = team1.name;
+							homeOffRebound++;
+						}
+						else{
+							console.log(team2.name + " offensive rebound.")
+							team = team2.name;
+							homeDefRebound++;
+						}
+					}
+				}	
+			}	
 			else if(num > homeThreePointShot){
 				num = Math.random();
 				console.log(team1.name + " shoots a 3 pointer...")
-				if(num <= homeTeamThreePointPercentage){
-					result = "home 3pt field goal";
-					team = team2.name;
-				}
-				else{
+				if(num <= awayBlocksPercentage){
+					console.log(team2.name + " blocked the shot!")
+					console.log("Loose ball...")
+					homeTotalBlocks++;
 					num = Math.random();
-					if(num < homeRebound){
-						result = "home 3pt field goal missed. Home offensive rebound";
+					if(num < .50){
+						console.log(team1.name + " has possession");
 						team = team1.name;
 					}
-					else {
-						result = "home 3pt field goal missed. Away defensive rebound";
-						team = team2.name;
+					else{
+						console.log(team2.name + " has possession");
+						team = team2.name; 
+					}
+				}
+				else if(num > awayBlocksPercentage && num <= awayFoulPercentage){
+					console.log(team2.name + " foul..")
+					var homeFoulShots = true;
+					var foulShotsAttempted = 1;
+					num = Math.random();
+					if(num <= .15){
+						console.log(team1.name + " made the shot! Four point play!")
+						homeTeamScore = homeTeamScore + 3;
+						madeHome3ptShot++;
+						console.log(team1.name + " shoots the free throw..")
+						num = Math.random();
+						if(num <= homeTeamFTPercentage){
+							console.log(team1.name + " made the free throw")
+							homeTeamScore++;
+							homeFTMade++;
+							team = team2.name;
+						}
+						else{
+							console.log(team1.name + " missed the free throw")
+							num = Math.random();
+							homeFTMissed++;
+							if(num <= homeOffReboundPercentage){
+								console.log(team1.name + " offensive rebound.")
+								homeOffRebound++;
+								team = team1.name;
+							}
+							else{
+								console.log(team2.name + " defensive rebound.")
+								awayDefRebound++;
+								team = team2.name;
+							}
+						}
+					}
+					while(homeFoulShots){
+						num = Math.random();
+						if(num <= homeTeamFTPercentage){
+							console.log("Free throw made")
+							homeTeamScore++;
+							homeFTMade++;
+							foulShotsAttempted++;
+							if(foulShotsAttempted == 3){
+								num = Math.random();
+								if(num <= homeOffRebound){
+									console.log(team1.name + " missed the final free throw. " + team1.name + " offensive rebound.");
+									team = team1.name;
+									foulShotsAttempted == 1;
+									homeFoulShots = false;
+								}
+								else{
+									console.log(team1.name + " missed the final free throw. " + team2.name + " defensive rebound.");
+									team = team2.name;
+									homeFTMissed++;
+									foulShotsAttempted == 1;
+									homeFoulShots = false;
+								}
+							}
+							else{
+								homeFoulShots = true;
+							}
+						}
+						else{
+							console.log("free throw missed")
+							foulShotsAttempted++;
+							if(foulShotsAttempted == 3){
+								num = Math.random();
+								if(num <= homeOffRebound){
+									console.log(team1.name + " missed the final free throw. " + team1.name + " with the offensive rebound.");
+									team = team1.name;
+									foulShotsAttempted == 1;
+									homeFoulShots = false;
+								}
+								else{
+									console.log(team1.name + " missed the final free throw. " + team2.name + " with the defensive rebound.");
+									team = team2.name;
+									foulShotsAttempted == 1;
+									homeFoulShots = false;
+								}
+							}
+							else{
+								homeFoulShots = true;
+							}
+						}
+					}
+				}
+				else{
+					if(num <= homeTeamThreePointPercentage){
+					console.log(team1.name + " scored three points!")
+					madeHome3ptShot++;
+					homeTeamScore = homeTeamScore + 3;
+					team = team2.name;
+					}
+					else{
+						num = Math.random();
+						if(num <= homeRebound){
+							console.log(team1.name + " missed the shot." + team1.name + " rebounded the ball.")
+							missedShot3ptHome++;
+							homeOffRebound++;
+							team = team1.name;
+						}
+						else {
+							console.log(team1.name + " missed the shot." + team2.name + " rebounded the ball.")
+							missedShot3ptHome++;
+							awayDefRebound++;
+							team = team2.name;
+						}
 					}
 				}
 			}
 		}
-		
+	
+
 		// Away Team's possession
 		if(possession == team2.name){
 			// Away Team
-			num = Math.random();
+				num = Math.random();
 			if(num < awayTurnover){
-				result = "away turnover";
-				team = team1.name;
+				console.log(team2.name + " turnover")
+				awayTurnovers++;
+				team = team2.name;
 			}
-			
 			else if(num > awayTurnover && num < awayThreePointShot){
 				console.log(team2.name + " shoots a 2 pointer...")
 				num = Math.random();
-				if(num <= awayTeamTwoPointPercentage){
-					result = "away 2pt field goal";
-					team = team1.name;
-				}
-				else{
+				if(num <= awayBlocksPercentage){
+					console.log(team2.name + " blocked the shot!")
+					console.log("Loose ball...")
+					awayTotalBlocks++;
 					num = Math.random();
-					if(num < awayRebound){
-						result = "away 2pt field goal missed. Away offensive rebound";
+					if(num < .50){
+						console.log(team2.name + " has possession");
 						team = team2.name;
 					}
 					else{
-						result = "away 2pt field goal missed. Home defensive rebound";
-						team = team1.name;
+						console.log(team2.name + " has possession");
+						team = team1.name; 
 					}
 				}
-			}
-				
+				else if(num <= awayFoulPercentage){
+					console.log(team2.name + " foul..")
+					num = Math.random();
+					if(num <= .35){
+						console.log(team2.name + " shoots. Three point play!")
+						awayTeamScore = awayTeamScore + 2;
+						console.log("One foul shot for " + name1)
+						console.log(team2.name + " shoots the free throw..")
+						num = Math.random();
+						if(num <= awayTeamFTPercentage){
+							console.log(team2.name + " made the free throw");
+							awayTeamScore++;
+							awayFTMade++;
+							team = team2.name;
+						}
+						else{
+							console.log(team2.name + " missed the free throw.")
+							num = Math.random();
+							awayFTMissed++;
+							if(num <= awayOffReboundPercentage){
+								console.log(team2.name + " missed the free throw. " + team2.name + " offensive rebound.")
+								awayOffRebound++;
+								team = team2.name;
+							}
+							else{
+								console.log(team2.name + " missed the free throw. " + team1.name + " defensive rebound.")
+								awayDefRebound++;
+								team = team1.name;
+							}
+						}
+					}
+					else{
+						console.log(team2.name + " missed the shot. " + team2.name + " has two foul shots")
+						console.log(team2.name + " shoots the first free throw")
+						num = Math.random();
+						if(num <= awayTeamFTPercentage){
+							console.log("Free throw made")
+							awayTeamScore++;
+							awayFTMade++;
+							num = Math.random();
+							console.log(team2.name + " shoots the second free throw..")
+							if(num <= awayTeamFTPercentage){
+								console.log("Free throw made")
+								awayTeamScore++;
+								awayFTMade++;
+								team = team1.name;
+							}
+							else{
+								console.log("Free throw missed")
+								num = Math.random();
+								if(num <= awayOffRebound){
+									console.log(team2.name + " offensive rebound.")
+									awayOffRebound++;
+									awayFTMissed++;
+									team = team2.name;
+								}	
+								else{
+									console.log(team2.name + " defensive rebound.")
+									awayDefRebound++;
+									awayFTMissed++;
+									team = team1.name;
+								}
+							}
+						}
+						else{
+							console.log("Free throw missed")
+							num = Math.random();
+							if(num <= awayOffReboundPercentage){
+								console.log(team2.name + " offensive rebound.")
+								team = team2.name;
+								awayOffRebound++;
+								awayFTMissed++;
+							}
+							else{
+								console.log(team2.name + " defensive rebound.")
+								team = team2.name;
+								awayDefRebound++;
+								awayFTMissed++;
+							}
+						}
+					}
+				}
+				else{
+					if(num <= awayTeamTwoPointPercentage){
+					console.log(team2.name + " scored two points!")
+					madeAway2ptShot++;
+					awayTeamScore = awayTeamScore + 2;
+					}
+					else{
+						console.log(team2.name + " missed the shot..")
+						num = Math.random();
+						missedShot2ptAway++;
+						if(num < awayRebound){
+							console.log(team2.name + " offensive rebound.")
+							team = team2.name;
+							awayOffRebound++;
+						}
+						else{
+							console.log(team2.name + " offensive rebound.")
+							team = team1.name;
+							awayDefRebound++;
+						}
+					}
+				}	
+			}	
 			else if(num > awayThreePointShot){
 				num = Math.random();
 				console.log(team2.name + " shoots a 3 pointer...")
-				if(num <= awayTeamThreePointPercentage){
-					result = "away 3pt field goal";
-					team = team1.name;
-				}
-				else{
+				if(num <= awayBlocksPercentage){
+					console.log(team2.name + " blocked the shot!")
+					console.log("Loose ball...")
+					awayTotalBlocks++;
 					num = Math.random();
-					if(num < awayRebound){
-						result = "away 3pt field goal missed. Away offensive rebound";
+					if(num < .50){
+						console.log(team2.name + " has possession");
 						team = team2.name;
-					
 					}
 					else{
-						result = "away 3pt field goal missed. Home defensive rebound";
-						team = team1.name;
-						
+						console.log(team1.name + " has possession");
+						team = team1.name; 
+					}
+				}
+				else if(num > awayBlocksPercentage && num <= awayFoulPercentage){
+					console.log(team2.name + " foul..")
+					var awayFoulShots = true;
+					var foulShotsAttempted = 1;
+					num = Math.random();
+					if(num <= .15){
+						console.log(team2.name + " made the shot! Four point play!")
+						awayTeamScore = awayTeamScore + 3;
+						madeHome3ptShot++;
+						console.log(team2.name + " shoots the free throw..")
+						num = Math.random();
+						if(num <= awayTeamFTPercentage){
+							console.log(team2.name + " made the free throw")
+							awayTeamScore++;
+							awayFTMade++;
+							team = team2.name;
+						}
+						else{
+							console.log(team2.name + " missed the free throw")
+							num = Math.random();
+							awayFTMissed++;
+							if(num <= awayOffReboundPercentage){
+								console.log(team2.name + " offensive rebound.")
+								awayOffRebound++;
+								team = team2.name;
+							}
+							else{
+								console.log(team2.name + " defensive rebound.")
+								awayDefRebound++;
+								team = team1.name;
+							}
+						}
+					}
+					while(awayFoulShots){
+						num = Math.random();
+						if(num <= awayTeamFTPercentage){
+							console.log("Free throw made")
+							awayTeamScore++;
+							awayFTMade++;
+							foulShotsAttempted++;
+							if(foulShotsAttempted == 3){
+								num = Math.random();
+								if(num <= awayOffRebound){
+									console.log(team2.name + " missed the final free throw. " + team2.name + " offensive rebound.");
+									team = team2.name;
+									foulShotsAttempted == 1;
+									awayFoulShots = false;
+								}
+								else{
+									console.log(team2.name + " missed the final free throw. " + team1.name + " defensive rebound.");
+									team = team1.name;
+									awayFTMissed++;
+									foulShotsAttempted == 1;
+									awayFoulShots = false;
+								}
+							}
+							else{
+								awayFoulShots = true;
+							}
+						}
+						else{
+							console.log("free throw missed")
+							foulShotsAttempted++;
+							awayFTMissed++;
+							if(foulShotsAttempted == 3){
+								num = Math.random();
+								if(num <= awayOffRebound){
+									console.log(team2.name + " missed the final free throw. " + team2.name + " with the offensive rebound.");
+									team = team2.name;
+									foulShotsAttempted == 1;
+									awayFoulShots = false;
+								}
+								else{
+									console.log(team2.name + " missed the final free throw. " + team1.name + " with the defensive rebound.");
+									team = team1.name;
+									foulShotsAttempted == 1;
+									awayFoulShots = false;
+								}
+							}
+							else{
+								awayFoulShots = true;
+							}
+						}
+					}
+				}
+				else{
+					if(num <= awayTeamThreePointPercentage){
+					console.log(team2.name + " scored three points!")
+					madeHome3ptShot++;
+					awayTeamScore = awayTeamScore + 3;
+					team = team2.name;
+					}
+					else{
+						num = Math.random();
+						if(num <= awayRebound){
+							console.log(team2.name + " missed the shot." + team2.name + " rebounded the ball.")
+							missedShot3ptHome++;
+							awayOffRebound++;
+							team = team2.name
+						}
+						else {
+							console.log(team2.name + " missed the shot." + team1.name + " rebounded the ball.")
+							missedShot3ptHome++;
+							awayDefRebound++;
+							team = team1.name;
+						}
 					}
 				}
 			}
-		}
+		}		
 
 	}
 
@@ -1710,9 +2027,7 @@ function gameStart(team1, team2){
 		console.log("Turnovers: " + awayTurnovers)
 	}
 }
-*/
-
-// delay = setInterval(function(){gameStart(teams[3], teams[1])}, 5000);
-// console.log(teams[3].overall + ", " + teams[1].overall)
+delay = setInterval(function(){gameStart(teams[0], teams[3])}, 5000);
+console.log(teams[0].overall + ", " + teams[3].overall)
 
 //offensivePercentages(teams[0].twoPTRating, teams[0].threePTRating)
