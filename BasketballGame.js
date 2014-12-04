@@ -188,6 +188,7 @@ function Team(name){
 	combinedOverall = offOverall + defOverall;
 	rawOverall = combinedOverall/2;
 	overall = Math.round(rawOverall);
+
 }
 
 // Set the name of the teams playing
@@ -197,7 +198,7 @@ function TeamName(name1, name2){
 }
 
 // Sets the base percentage for each possession. 
-function defense(homeOffOverall, homeDefOverall, homeOffReboundRating, homeDefReboundRating, awayOffOverall, awayDefOverall, awayOffReboundRating, awayDefRebound){
+function defense(homeOffOverall, homeDefOverall, homeOffReboundRating, homeDefReboundRating, awayOffOverall, awayDefOverall, awayOffReboundRating, awayDefReboundRating){
 
 	this.homeOffOverall = homeOffOverall;
 	this.homeDefOverall = homeDefOverall;
@@ -1450,8 +1451,6 @@ teams[1] = new Team("Wisconsin");
 teams[2] = new Team("Los Angeles");
 teams[3] = new Team("New York");
 
-//offensivePercentages(0, teams[0].threePTRating, teams[0].ftRating);
-
 // Inital possession
 team = teams[3].name;
 
@@ -1975,7 +1974,7 @@ function gameStart(team1, team2){
 					}
 					else{
 						num = Math.random();
-						if(num <= awayRebound){
+						if(num <= awayOffReboundPercentage){
 							console.log(team2.name + " missed the shot." + team2.name + " rebounded the ball.")
 							missedShot3ptHome++;
 							awayOffRebound++;
@@ -1997,7 +1996,6 @@ function gameStart(team1, team2){
 	//function calls
 	currentPossession(team);
 	generateResult(currentPossession);
-	getResult(result);	
 	console.log(name1 + ":" + homeTeamScore + " " + name2+ ":" + awayTeamScore)
 	count++;
 	// End Game
@@ -2030,4 +2028,4 @@ function gameStart(team1, team2){
 delay = setInterval(function(){gameStart(teams[0], teams[3])}, 5000);
 console.log(teams[0].overall + ", " + teams[3].overall)
 
-//offensivePercentages(teams[0].twoPTRating, teams[0].threePTRating)
+
