@@ -523,6 +523,7 @@ function gameStart(team1, team2){
 					console.log(team1.name + " scored two points!")
 					madeHome2ptShot++;
 					homeTeamScore = homeTeamScore + 2;
+					team = team2.name;
 					}
 					else{
 						console.log(team1.name + " missed the shot..")
@@ -675,7 +676,7 @@ function gameStart(team1, team2){
 			if(num < awayTurnover){
 				console.log(team2.name + " turnover")
 				awayTurnovers++;
-				team = team2.name;
+				team = team1.name;
 			}
 			else if(num > awayTurnover && num < awayThreePointShot){
 				console.log(team2.name + " shoots a 2 pointer...")
@@ -781,6 +782,7 @@ function gameStart(team1, team2){
 					console.log(team2.name + " scored two points!")
 					madeAway2ptShot++;
 					awayTeamScore = awayTeamScore + 2;
+					team = team1.name;
 					}
 					else{
 						console.log(team2.name + " missed the shot..")
@@ -906,7 +908,7 @@ function gameStart(team1, team2){
 					console.log(team2.name + " scored three points!")
 					madeHome3ptShot++;
 					awayTeamScore = awayTeamScore + 3;
-					team = team2.name;
+					team = team1.name;
 					}
 					else{
 						num = Math.random();
@@ -960,6 +962,6 @@ function gameStart(team1, team2){
 		console.log("Turnovers: " + awayTurnovers)
 	}
 }
-delay = setInterval(function(){gameStart(teams[2], teams[1])}, 5000);
+delay = setInterval(function(){gameStart(teams[2], teams[1])}, 500);
 console.log(teams[2].name + ": " + teams[2].offOverall + ", " +  teams[2].defOverall)
 console.log(teams[1].name + ": " + teams[1].offOverall + ", " + teams[1].defOverall)
